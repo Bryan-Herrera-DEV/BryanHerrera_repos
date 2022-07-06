@@ -1,5 +1,4 @@
 # Prueba tecnica BACKEND NODE JS
----
 
 ## Ejercicio 1: Servicio simulado (Mock)
 - Url servicio mock

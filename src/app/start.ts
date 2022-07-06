@@ -1,5 +1,8 @@
-import { AppBackend } from './AppBackend';
+import { resolve } from "path";
+import { config } from "dotenv";
+config({ path: resolve(__dirname, "./../../.env") });
 
+import { AppBackend } from './AppBackend';
 try {
   new AppBackend().start();
 } catch (e) {

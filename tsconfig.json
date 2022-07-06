@@ -6,12 +6,18 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": false,
-    "rootDir": ".",
+    "rootDir": "./src",
     "strict": true,
     "noEmit": false,
     "resolveJsonModule": true,
     "noUnusedLocals": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true ,
+    "removeComments": true,
+    "strictPropertyInitialization": false
   },
   "include": [
     "src/**/**.ts"

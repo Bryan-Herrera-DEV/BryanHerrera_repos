@@ -8,16 +8,14 @@ import helmet from 'helmet';
 import * as http from 'http';
 import httpStatus from 'http-status';
 import { registerRoutes } from './routes';
-import { config } from "dotenv";
-import { resolve } from "path";
-
+import { NODE_ENV, DATABASE_NAME } from './configs/EnvGuardsVariables';
+import { AppDataSource } from "./configs/db";
 
 export class Server {
   private express: express.Express;
   private port: string;
   private httpServer?: http.Server;
   constructor(port: string) {
-    config({ path: resolve(__dirname, '../.env') });
 
     this.port = port;
     this.express = express();
@@ -42,15 +40,26 @@ export class Server {
     });
   }
 
-  async listen(): Promise<void>{
+  async db_connection(): Promise<void>{
     return new Promise((resolve) => {
+      AppDataSource.initialize()
+      .then(() => {
+        console.log(`[+] URL BASE DE DATOS: ${DATABASE_NAME}`);
+        resolve();
+      })
+      .catch(error => console.log(error))
+    })
+  }
+
+  async listen(): Promise<void>{
+      return new Promise((resolve) => {
       this.httpServer = this.express.listen(this.port, () => {
-        console.log(`[+] Server corriendo en http://localhost:${this.port} en modo ${this.express.get('env')}`);
+        console.log(`[+] Server corriendo en http://localhost:${this.port} en modo ${NODE_ENV}`);
       });
-      console.log('Presiona CTRL-C para detener\n');
       resolve();
     })
   }
+
   getHTTPServer() {
     return this.httpServer;
   }
