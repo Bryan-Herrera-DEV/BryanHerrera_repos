@@ -5,24 +5,7 @@ import { Tribe } from "../../entities/tribe.entitie";
 import httpStatus from "http-status";
 import { Metrics } from "../../entities/metrics.entitie";
 import axios from "axios";
-
-/*
-Ejemplo respuesta
-{
-"id": "1", // identificador del repositorio
-"name": "cd-common-utils", // nombre del repositorio
-"tribe": "Centro Digital", // nombre de la tribu
-"organization": "Banco Pichincha", // nombre de la organización
-"coverage": "35%", // cobertura de pruebas unitarias
-"codeSmells": 0,
-"bugs": 0,
-"vulnerabilities": 0,
-"hotspots": 0,
-"verificationState": "Verificado", // Estado de verificación (Mock)
-"state":"Habilitado" // Estado del repositorio (state)
-},
-
-*/
+import { parseAsync } from "json2csv";
 
 export class getRepositoryByIdController implements Controller {
 	private async getMock() {
@@ -54,14 +37,10 @@ export class getRepositoryByIdController implements Controller {
 					}`;
 				}
 			});
-      const state = _repository.state.toLocaleLowerCase();
-      data.state = `${
-        state === 'e'
-          ? "Habilitado"
-          : state === 'd'
-          ? "Deshabilitado"
-          : "Archivado"
-      }`;
+			const state = _repository.state.toLocaleLowerCase();
+			data.state = `${
+				state === "e" ? "Habilitado" : state === "d" ? "Deshabilitado" : "Archivado"
+			}`;
 			return data;
 		}
 	}
@@ -84,16 +63,40 @@ export class getRepositoryByIdController implements Controller {
 			vulnerabilities: metrics.vulnerabilities,
 			hotspots: metrics.hotspot,
 		};
-    const nRes = await this.makeRepositoryData(response, metrics.coverage, repo);
+		const nRes = await this.makeRepositoryData(response, metrics.coverage, repo);
 		return nRes as object;
 	}
 
+	private async makeCSV(data: any) {
+
+		const csv: string = await parseAsync(await data, {
+			delimiter: ",",
+			fields: [
+				{ value: "id" },
+				{ value: "name" },
+				{ value: "tribe" },
+				{ value: "organization" },
+				{ value: "coverage" },
+				{ value: "codeSmells" },
+				{ value: "bugs" },
+				{ value: "vulnerabilities" },
+				{ value: "hotspots" },
+				{ value: "verificationState" },
+				{ value: "state" },
+			],
+			quote: "",
+		});
+    return {
+      csv: Buffer.from(csv),
+    };
+	}
 	private async getRepositoryById(
 		_req: Request,
 		res: Response,
 		id_tribe: number,
 		name_tribe: string,
-		name_organization: string
+		name_organization: string,
+		cs: string
 	): Promise<void> {
 		try {
 			const repository: Repository[] = await Repository.findBy({
@@ -118,14 +121,20 @@ export class getRepositoryByIdController implements Controller {
 							rep
 						)
 					);
-          if (i === repository.length - 1) {
-            res.status(httpStatus.OK).json({
-              data: await response,
-            });
-          }
-				})
-
-
+					if (i === repository.length - 1) {
+						setTimeout(async () => {
+							if (cs === "n") {
+								res.status(httpStatus.OK).json({
+									data: await response,
+								});
+							} else {
+                res.header('Content-Type', 'text/csv');
+                res.attachment('metrics.csv');
+								res.send(await this.makeCSV(response));
+							}
+						}, 100);
+					}
+				});
 			}
 		} catch (error) {
 			res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
@@ -151,7 +160,37 @@ export class getRepositoryByIdController implements Controller {
 					res,
 					parseInt(req.params.id_tribe),
 					tribe.name,
-					tribe.id_organization.name
+					tribe.id_organization.name,
+					"n"
+				);
+			}
+		} catch (error) {
+			res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+				status: "error",
+				message: "Error al repositorio las tribus",
+				data: error,
+			});
+		}
+	}
+
+	async generateCSV(req: Request, res: Response): Promise<void> {
+		try {
+			const tribe = await Tribe.findOneBy({
+				id_tribe: parseInt(req.params.id_tribe),
+			});
+			if (!tribe) {
+				res.status(httpStatus.NOT_FOUND).json({
+					status: "error",
+					message: "Tribu no encontrada",
+				});
+			} else {
+				await this.getRepositoryById(
+					req,
+					res,
+					parseInt(req.params.id_tribe),
+					tribe.name,
+					tribe.id_organization.name,
+					"s"
 				);
 			}
 		} catch (error) {

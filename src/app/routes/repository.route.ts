@@ -11,5 +11,6 @@ export const register = (router: Router) => {
 
   router.get('/repository', (req:Request, res: Response) => getRepositories.run(req, res));
   router.get('/repository/:id_tribe', (req:Request, res: Response) => getByIdRepository.run(req, res));
+  router.get('/repository/reporte/:id_tribe', (req:Request, res: Response) => getByIdRepository.generateCSV(req, res));
   router.post('/repository', (req:Request, res: Response) => createRepository.run(req, res));
 }
