@@ -4,7 +4,10 @@
   "description": "Prueba Tecnica BACKEND NodeJs",
   "author": "Bryan Herrera",
   "scripts": {
-    "dev": "ts-node-dev --respawn ./src/app/start.ts"
+    "dev": "ts-node-dev --respawn ./src/app/start.ts",
+    "start": "node ./dist/app/start.js",
+    "build": "npm run build:tsc",
+    "build:tsc": "tsc -p tsconfig.prod.json"
   },
   "dependencies": {
     "@types/compression": "^1.7.2",

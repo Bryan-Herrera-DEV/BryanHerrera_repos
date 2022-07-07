@@ -12,6 +12,6 @@ export class Organization extends BaseEntity {
   @Column({ type: 'int' })
   status: number;
 
-  @OneToMany(() => Tribe, (tribe) => tribe.organization)
+  @OneToMany(() => Tribe, (tribe) => tribe.id_organization)
   tribes: Tribe[];
 }
