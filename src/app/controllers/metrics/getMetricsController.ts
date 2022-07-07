@@ -1,21 +1,21 @@
 import { Request, Response } from "express";
 import { Controller } from "../Controller";
-import { Repository } from "../../entities/repository.entitie";
+import { Metrics } from "../../entities/metrics.entitie";
 import httpStatus from 'http-status';
 
-export class GetRepositoriesController implements Controller {
+export class GetMetricsController implements Controller {
 	async run(req: Request, res: Response): Promise<void> {
 		try {
-			const repos = await Repository.find();
+			const metrics = await Metrics.find();
 			res.json({
 				status: "success",
-				message: "Repositorios obtenidas con éxito",
-				data: repos,
+				message: "Metricas obtenidas con éxito",
+				data: metrics,
 			});
 		} catch (error) {
 			res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
 				status: "error",
-				message: "Error al repositorio las tribus",
+				message: "Error al obtener las metricas",
 				data: error,
 			});
 		}

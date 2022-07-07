@@ -1,16 +1,17 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   OneToOne,
   JoinColumn,
+  BaseEntity,
+  PrimaryColumn,
 } from 'typeorm';
 
 import { Repository } from './repository.entitie';
 
 @Entity()
-export class Metrics {
-  @PrimaryGeneratedColumn()
+export class Metrics extends BaseEntity {
+  @PrimaryColumn()
   @OneToOne(() => Repository)
   @JoinColumn({ name: 'id_repository' })
   id_repository: number;
