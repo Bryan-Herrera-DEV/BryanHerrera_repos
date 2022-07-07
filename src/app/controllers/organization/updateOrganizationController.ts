@@ -6,9 +6,9 @@ import httpStatus from 'http-status';
 export class OrganizationPutController implements Controller {
 	async run(req: Request, res: Response): Promise<void> {
 		try {
-      const { name, status, id } = req.body;
+      const { name, status, id_organization } = req.body;
 
-      const organization = await Organization.findOneBy({ id_organization: parseInt(id) });
+      const organization = await Organization.findOneBy({ id_organization: parseInt(id_organization) });
       if (!organization) {
         res.status(httpStatus.NOT_FOUND).json({
           status: "error",
