@@ -5,13 +5,14 @@ import {
   JoinColumn,
   ManyToOne,
   OneToOne,
+  BaseEntity,
 } from 'typeorm';
 
 import { Metrics } from './metrics.entitie';
 import { Tribe } from './tribe.entitie';
 
 @Entity()
-export class Repository {
+export class Repository extends BaseEntity {
   @PrimaryGeneratedColumn()
   id_repository: number;
 
@@ -22,14 +23,14 @@ export class Repository {
   state: string;
 
   @Column({ type: 'timestamp' })
-  create_time: number;
+  create_time: Date;
 
   @Column({ type: 'char', length: 1 })
   status: string;
 
   @ManyToOne(() => Tribe, (tribe) => tribe.repositories)
   @JoinColumn({ name: 'id_tribe' })
-  tribe: Tribe;
+  id_tribe: Tribe;
 
   @OneToOne(() => Metrics, (metrics) => metrics.id_repository, {
     eager: true,
