@@ -5,13 +5,14 @@ import {
   JoinColumn,
   OneToMany,
   ManyToOne,
+  BaseEntity,
 } from 'typeorm';
 
 import { Organization } from './organization.entitie';
 import { Repository } from './repository.entitie';
 
 @Entity()
-export class Tribe {
+export class Tribe extends BaseEntity {
   @PrimaryGeneratedColumn()
   id_tribe: number;
 
@@ -25,7 +26,7 @@ export class Tribe {
     eager: true,
   })
   @JoinColumn({ name: 'id_organization' })
-  organization: Organization;
+  id_organization: Organization;
 
   @OneToMany(() => Repository, (repository) => repository.tribe)
   repositories: Repository[];
