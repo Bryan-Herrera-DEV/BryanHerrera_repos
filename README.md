@@ -120,3 +120,55 @@ POST: localhost:3000/tribe/create
     }
   }
 ```
+---
+### Repository
+GET: localhost:3000/repository
+```json
+ // Ejemplo respuesta
+  {
+    "status": "success",
+    "message": "Repositorios obtenidas con éxito",
+    "data": [
+        {
+            "id_repository": 1,
+            "name": "cd-common-utils",
+            "state": "E",
+            "create_time": "2022-07-07T16:57:40.536Z",
+            "status": "A",
+            "metrics": null
+        },
+        {
+            "id_repository": 2,
+            "name": "cd-common-text",
+            "state": "A",
+            "create_time": "2022-07-07T17:01:33.445Z",
+            "status": "i",
+            "metrics": null
+        }
+    ]
+  }
+```
+POST: localhost:3000/repository
+```json
+ // Ejemplo Body De la peticion:
+  {
+    "id_tribe": 1,
+    "name": "cd-common-text",
+    "state": "A",
+    "status": "i"
+  }
+  
+ // Ejemplo respuesta
+  {
+    "status": "success",
+    "message": "Repositorio creada con éxito",
+    "data": {
+        "id_tribe": "1",
+        "name": "cd-common-text",
+        "state": "A",
+        "create_time": "2022-07-07T17:01:33.445Z",
+        "status": "i",
+        "id_repository": 2
+    }
+  }
+```
