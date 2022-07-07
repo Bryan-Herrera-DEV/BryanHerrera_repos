@@ -172,3 +172,57 @@ POST: localhost:3000/repository
     }
   }
 ```
+---
+### Metrics
+GET: localhost:3000/metrics
+```json
+ // Ejemplo respuesta
+  {
+    "status": "success",
+    "message": "Metricas obtenidas con éxito",
+    "data": [
+        {
+            "id_repository": 1,
+            "coverage": 35,
+            "bugs": "0",
+            "vulnerabilities": "0",
+            "hotspot": "0",
+            "code_smells": "1"
+        },
+        {
+            "id_repository": 2,
+            "coverage": 75,
+            "bugs": "0",
+            "vulnerabilities": "2",
+            "hotspot": "0",
+            "code_smells": "1"
+        }
+    ]
+}
+```
+POST: localhost:3000/repository
+```json
+ // Ejemplo Body De la peticion:
+  {
+    "id_repository": 1,
+    "coverage": 35,
+    "bugs": "0",
+    "vulnerabilities": "0",
+    "hotspot": "0",
+    "code_smells": "1"
+  }
+  
+ // Ejemplo respuesta
+  {
+    "status": "success",
+    "message": "Metrica creada con éxito",
+    "data": {
+        "id_repository": 1,
+        "coverage": 35,
+        "bugs": "0",
+        "vulnerabilities": "0",
+        "hotspot": "0",
+        "code_smells": "1"
+    }
+  }
+```
