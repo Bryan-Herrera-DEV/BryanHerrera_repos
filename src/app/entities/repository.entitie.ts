@@ -30,7 +30,7 @@ export class Repository extends BaseEntity {
 
   @ManyToOne(() => Tribe, (tribe) => tribe.repositories)
   @JoinColumn({ name: 'id_tribe' })
-  id_tribe: Tribe;
+  id_tribe: number;
 
   @OneToOne(() => Metrics, (metrics) => metrics.id_repository, {
     eager: true,

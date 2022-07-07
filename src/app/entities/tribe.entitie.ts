@@ -28,6 +28,6 @@ export class Tribe extends BaseEntity {
   @JoinColumn({ name: 'id_organization' })
   id_organization: Organization;
 
-  @OneToMany(() => Repository, (repository) => repository.tribe)
+  @OneToMany(() => Repository, (repository) => repository.id_tribe)
   repositories: Repository[];
 }
