@@ -1,0 +1,25 @@
+6a566200f0a109b99e6d504a93f397f2
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AppDataSource = void 0;
+const typeorm_1 = require("typeorm");
+const url_1 = require("url");
+const organization_entitie_1 = require("../entities/organization.entitie");
+const tribe_entitie_1 = require("../entities/tribe.entitie");
+const repository_entitie_1 = require("../entities/repository.entitie");
+const metrics_entitie_1 = require("../entities/metrics.entitie");
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const dbUrl = new url_1.URL(process.env.DATABASE_URL);
+const routingId = dbUrl.searchParams.get('options');
+dbUrl.searchParams.delete('options');
+exports.AppDataSource = new typeorm_1.DataSource({
+    type: 'cockroachdb',
+    url: dbUrl.toString(),
+    ssl: true,
+    entities: [organization_entitie_1.Organization, tribe_entitie_1.Tribe, repository_entitie_1.Repository, metrics_entitie_1.Metrics],
+    synchronize: true,
+    extra: {
+        options: routingId,
+    },
+    logging: true,
+});

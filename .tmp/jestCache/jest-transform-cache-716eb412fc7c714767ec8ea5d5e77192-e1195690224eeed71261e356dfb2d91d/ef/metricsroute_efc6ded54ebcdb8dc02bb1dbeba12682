@@ -1,0 +1,13 @@
+6b788893f52b7fc64d6bb6003fb4ea4a
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.register = void 0;
+const createMetricsController_1 = require("../controllers/metrics/createMetricsController");
+const getMetricsController_1 = require("../controllers/metrics/getMetricsController");
+const register = (router) => {
+    const getMetrics = new getMetricsController_1.GetMetricsController();
+    const createMetrics = new createMetricsController_1.CreateMetricsController();
+    router.get('/metrics', (req, res) => getMetrics.run(req, res));
+    router.post('/metrics', (req, res) => createMetrics.run(req, res));
+};
+exports.register = register;

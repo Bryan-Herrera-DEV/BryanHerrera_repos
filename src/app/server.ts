@@ -16,7 +16,6 @@ export class Server {
   private port: string;
   private httpServer?: http.Server;
   constructor(port: string) {
-
     this.port = port;
     this.express = express();
     this.express.use(morgan('dev'));
@@ -31,7 +30,6 @@ export class Server {
     const router = Router();
     router.use(errorHandler());
     this.express.use(router);
-
     registerRoutes(router);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/ban-types
@@ -63,7 +61,9 @@ export class Server {
   getHTTPServer() {
     return this.httpServer;
   }
-
+  getEXpress() {
+    return this.express;
+  }
   async stop(): Promise<void> {
     return new Promise((resolve, reject) => {
       if (this.httpServer) {

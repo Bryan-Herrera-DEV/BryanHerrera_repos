@@ -12,7 +12,9 @@ export class AppBackend {
   get httpServer() {
     return this.server?.getHTTPServer();
   }
-
+  get express() {
+    return this.server?.getEXpress();
+  }
   async stop() {
     return this.server?.stop();
   }

@@ -1,0 +1,17 @@
+f5414e25dd75cc9a5dd17dcce5a1730e
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.register = void 0;
+const createRepositoryController_1 = require("../controllers/repository/createRepositoryController");
+const getRepositoriesController_1 = require("../controllers/repository/getRepositoriesController");
+const getRepositoryByIdController_1 = require("../controllers/repository/getRepositoryByIdController");
+const register = (router) => {
+    const getRepositories = new getRepositoriesController_1.GetRepositoriesController();
+    const createRepository = new createRepositoryController_1.CreateRepositoryController();
+    const getByIdRepository = new getRepositoryByIdController_1.getRepositoryByIdController();
+    router.get('/repository', (req, res) => getRepositories.run(req, res));
+    router.get('/repository/:id_tribe', (req, res) => getByIdRepository.run(req, res));
+    router.get('/repository/reporte/:id_tribe', (req, res) => getByIdRepository.generateCSV(req, res));
+    router.post('/repository', (req, res) => createRepository.run(req, res));
+};
+exports.register = register;

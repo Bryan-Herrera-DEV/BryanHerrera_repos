@@ -1,0 +1,6 @@
+ed729633e2a36cefaf05568583ae6065
+"use strict";
+exports.__esModule = true;
+var AppBackend_1 = require("../src/app/AppBackend");
+var appBackend = new AppBackend_1.AppBackend();
+console.log(await appBackend.start());

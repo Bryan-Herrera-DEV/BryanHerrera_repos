@@ -1,0 +1,68 @@
+442eef69e247cc329bef1f234431b19e
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreateMetricsController = void 0;
+const repository_entitie_1 = require("../../entities/repository.entitie");
+const metrics_entitie_1 = require("../../entities/metrics.entitie");
+const http_status_1 = __importDefault(require("http-status"));
+class CreateMetricsController {
+    run(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_repository, coverage, bugs, vulnerabilities, hotspot, code_smells } = req.body;
+                console.log(id_repository, coverage, bugs, vulnerabilities, hotspot, code_smells);
+                const data = yield repository_entitie_1.Repository.findOneBy({
+                    id_repository: id_repository,
+                });
+                if (!data) {
+                    res.status(http_status_1.default.NOT_FOUND).json({
+                        status: "error",
+                        message: "Tribu no encontrada",
+                    });
+                }
+                else {
+                    const metric = new metrics_entitie_1.Metrics();
+                    if (coverage !== undefined &&
+                        coverage !== null &&
+                        bugs !== undefined &&
+                        vulnerabilities !== null &&
+                        hotspot !== null &&
+                        code_smells !== null) {
+                        metric.id_repository = id_repository;
+                        metric.coverage = coverage;
+                        metric.bugs = bugs;
+                        metric.vulnerabilities = vulnerabilities;
+                        metric.hotspot = hotspot;
+                        metric.code_smells = code_smells;
+                        yield metric.save();
+                        res.status(http_status_1.default.CREATED).json({
+                            status: "success",
+                            message: "Metrica creada con éxito",
+                            data: metric,
+                        });
+                    }
+                }
+            }
+            catch (error) {
+                res.status(http_status_1.default.INTERNAL_SERVER_ERROR).json({
+                    status: "error",
+                    message: "Error al crear la metrica",
+                    data: error,
+                });
+            }
+        });
+    }
+}
+exports.CreateMetricsController = CreateMetricsController;

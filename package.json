@@ -7,14 +7,17 @@
     "dev": "ts-node-dev --respawn ./src/app/start.ts",
     "start": "node ./dist/app/start.js",
     "build": "npm run build:tsc",
-    "build:tsc": "tsc -p tsconfig.prod.json"
+    "build:tsc": "tsc -p tsconfig.prod.json",
+    "test": "cross-env PORT=3000 NODE_ENV=dev DATABASE_URL=postgresql://BryanHerreraDev:hPKPJUZbMG7uduHeJXVmbQ@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full^^^&options=--cluster%3Dheavy-kakapo-3307' SERVICE_MOCK_URL='https://demo4316745.mockable.io/repository/state' jest --verbose"
   },
   "dependencies": {
     "@types/compression": "^1.7.2",
     "@types/errorhandler": "^1.5.0",
+    "@types/supertest": "^2.0.12",
     "axios": "^0.27.2",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
     "errorhandler": "^1.5.1",
     "express": "^4.18.1",
@@ -26,7 +29,9 @@
     "node-dependency-injection": "^3.0.2",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.7"
+    "supertest": "^6.2.4",
+    "typeorm": "^0.3.7",
+    "win-node-env": "^0.6.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
@@ -34,10 +39,13 @@
     "@types/express": "^4.17.13",
     "@types/glob": "^7.2.0",
     "@types/helmet": "^4.0.0",
+    "@types/jest": "^28.1.4",
     "@types/json2csv": "^5.0.3",
     "@types/morgan": "^1.9.3",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
+    "jest": "^28.1.2",
+    "ts-jest": "^28.0.5",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4"
   }
