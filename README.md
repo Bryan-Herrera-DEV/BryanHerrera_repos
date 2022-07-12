@@ -18,7 +18,7 @@ GET: localhost:3000/organization
     "data": [
         {
             "id_organization": 2,
-            "name": "Banco Pichincha",
+            "name": "Entidad Bancaria",
             "status": "1"
         }
     ]
@@ -28,7 +28,7 @@ POST: localhost:3000/organization/create
 ```json
  // Ejemplo Body De la peticion:
   {
-    "name": "Banco Pichincha",
+    "name": "Entidad Bancaria",
     "status": "1"
   }
   
@@ -37,7 +37,7 @@ POST: localhost:3000/organization/create
     "status": "success",
     "message": "Organización creada con éxito",
     "data": {
-        "name": "Banco Pichincha",
+        "name": "Entidad Bancaria",
         "status": "1",
         "id_organization": 2
     }
@@ -48,7 +48,7 @@ PUT: localhost:3000/organization/update
 // Ejemplo Body De la peticion:
   {
     "id_organization": 2,
-    "name": "Banco Pichincha Actualizado",
+    "name": "Entidad Bancaria Actualizado",
     "status": "1"
   }
   
@@ -57,7 +57,7 @@ PUT: localhost:3000/organization/update
     "status": "success",
     "message": "Organización actualizada con exito",
     "data": {
-        "name": "Banco Pichincha Actualizado",
+        "name": "Entidad Bancaria Actualizado",
         "status": "1",
         "id_organization": 2
     }
@@ -92,7 +92,7 @@ GET: localhost:3000/tribe
             "status": "1",
             "id_organization": {
                 "id_organization": 2,
-                "name": "Banco Pichincha",
+                "name": "Entidad Bancaria",
                 "status": "1"
             }
         }

@@ -8,7 +8,7 @@
     "start": "node ./dist/app/start.js",
     "build": "npm run build:tsc",
     "build:tsc": "tsc -p tsconfig.prod.json",
-    "test": "cross-env PORT=3000 NODE_ENV=dev DATABASE_URL=postgresql://BryanHerreraDev:hPKPJUZbMG7uduHeJXVmbQ@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full^^^&options=--cluster%3Dheavy-kakapo-3307' SERVICE_MOCK_URL='https://demo4316745.mockable.io/repository/state' jest --verbose"
+    "test": "npm run dev && cross-env PORT=3000 NODE_ENV=dev DATABASE_URL=postgresql://BryanHerreraDev:hPKPJUZbMG7uduHeJXVmbQ@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full^^^&options=--cluster%3Dheavy-kakapo-3307' SERVICE_MOCK_URL='https://demo4316745.mockable.io/repository/state' jest --verbose"
   },
   "dependencies": {
     "@types/compression": "^1.7.2",
